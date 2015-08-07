@@ -1,5 +1,5 @@
 # IssuTrack
-A Java based application to quickly create and track issues.
+A Java based application to quickly create and track issues. This program uses JavaFX and requires Java 8 to function correctly.
 
 
 ##Overview
