@@ -20,12 +20,12 @@ Issue sets are saved in .XML format with an element heirarchy as follows:
 ```xml
 <issues>
     <issue>
-      <assignedTo>Assignee Name\</assignedTo>
-      <created>2015-08-09\</created>
-      <creator>Creator Name\</creator>
-      <description>Description of the issue\</description>
-      <finished>-999999999-01-01\</finished>
-      <name>Issue Name\</name>
+      <assignedTo>Assignee Name</assignedTo>
+      <created>2015-08-09</created>
+      <creator>Creator Name</creator>
+      <description>Description of the issue</description>
+      <finished>-999999999-01-01</finished>
+      <name>Issue Name</name>
   </issue>
 </issues>
 ```
