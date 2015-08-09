@@ -1,8 +1,8 @@
 package com.sarcross.issutrack.view;
 
-import java.time.LocalDate;
-
 import com.sarcross.issutrack.model.Issue;
+
+import java.time.LocalDate;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -63,6 +63,8 @@ public class IssueEditDialogController {
 			issue.setDescription(descriptionArea.getText());
 			if(finishedCheckBox.isSelected())
 				issue.setFinished();
+			else if(!finishedCheckBox.isSelected())
+				issue.setFinished(new SimpleObjectProperty<LocalDate>(LocalDate.MIN));
 			
 			okClicked = true;
 			dialogStage.close();

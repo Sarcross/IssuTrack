@@ -1,5 +1,7 @@
 package com.sarcross.issutrack.model;
 
+import com.sarcross.issutrack.util.IssueAdapter;
+
 import java.time.LocalDate;
 
 import javafx.beans.property.ObjectProperty;
@@ -20,33 +22,26 @@ public class Issue {
 	}
 	
 	public Issue(Issue iss) {
+		this();
 		name = new SimpleStringProperty(iss.name.get());
 		description = new SimpleStringProperty(iss.description.get());
 		creator = new SimpleStringProperty(iss.creator.get());
 		assignedTo = new SimpleStringProperty(iss.assignedTo.get());
-		created = new SimpleObjectProperty<LocalDate>(LocalDate.of(iss.created.get().getYear(),  iss.created.get().getMonth(),  iss.created.get().getDayOfMonth()));
+		created = new SimpleObjectProperty<LocalDate>(LocalDate.ofEpochDay(iss.getCreated().toEpochDay()));
 		if(iss.finished == null)
-			finished = null;
+			finished = new SimpleObjectProperty<LocalDate>(LocalDate.MIN);
 		else
-			finished = new SimpleObjectProperty<LocalDate>(LocalDate.of(iss.finished.get().getYear(), iss.finished.get().getMonth(), iss.finished.get().getDayOfMonth()));
+			finished = new SimpleObjectProperty<LocalDate>(LocalDate.ofEpochDay(iss.getFinished().toEpochDay()));
 	}
 	
-	public Issue(String n, String desc, String cr) {
-		name = new SimpleStringProperty(n);
-		description = new SimpleStringProperty(desc);
-		creator = new SimpleStringProperty(cr);
-		assignedTo = null;
-		created = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-		finished = null;
-	}
-	
-	public Issue(String n, String desc, String cr, String assign) {
-		name = new SimpleStringProperty(n);
-		description = new SimpleStringProperty(desc);
-		creator = new SimpleStringProperty(cr);
-		assignedTo = new SimpleStringProperty(assign);
-		created = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-		finished = null;
+	public Issue(IssueAdapter iss) {
+		this();
+		name = new SimpleStringProperty(iss.getName());
+		description = new SimpleStringProperty(iss.getDescription());
+		creator = new SimpleStringProperty(iss.getCreator());
+		assignedTo = new SimpleStringProperty(iss.getAssignedTo());
+		created = new SimpleObjectProperty<LocalDate>(LocalDate.ofEpochDay(iss.getCreated().toEpochDay()));
+		finished = new SimpleObjectProperty<LocalDate>(LocalDate.ofEpochDay(iss.getFinished().toEpochDay()));
 	}
 	
 	public void clear() {
@@ -55,7 +50,7 @@ public class Issue {
 		creator = new SimpleStringProperty();
 		assignedTo = new SimpleStringProperty();
 		created = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-		finished = null;
+		finished = new SimpleObjectProperty<LocalDate>(LocalDate.MIN);
 	}
 	
 	public boolean equals(Issue iss) {
@@ -72,7 +67,7 @@ public class Issue {
 	}
 	
 	public boolean isFinished() {
-		return (finished != null);
+		return !(finished.get().equals((LocalDate.MIN)));
 	}
 
 	public StringProperty getName() {
@@ -107,7 +102,11 @@ public class Issue {
 		this.assignedTo = new SimpleStringProperty(assignedTo);
 	}
 
-	public ObjectProperty<LocalDate> getCreated() {
+	public LocalDate getCreated() {
+		return created.get();
+	}
+	
+	public ObjectProperty<LocalDate> createdProperty() {
 		return created;
 	}
 
@@ -115,8 +114,8 @@ public class Issue {
 		this.created = new SimpleObjectProperty<LocalDate>(LocalDate.ofEpochDay(created.get().toEpochDay()));
 	}
 
-	public ObjectProperty<LocalDate> getFinished() {
-		return finished;
+	public LocalDate getFinished() {
+		return finished.get();
 	}
 
 	public void setFinished() {
@@ -126,6 +125,4 @@ public class Issue {
 	public void setFinished(ObjectProperty<LocalDate> finished) {
 		this.finished = new SimpleObjectProperty<LocalDate>(LocalDate.ofEpochDay(finished.get().toEpochDay()));
 	}
-	
-	
 }

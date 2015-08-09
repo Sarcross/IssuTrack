@@ -1,12 +1,12 @@
-//http://code.makery.ch/library/javafx-8-tutorial/part5/
-
 package com.sarcross.issutrack;
 
-import java.io.IOException;
-
+import com.sarcross.issutrack.file.XMLFileHandler;
 import com.sarcross.issutrack.model.Issue;
 import com.sarcross.issutrack.view.IssueEditDialogController;
 import com.sarcross.issutrack.view.IssueOverviewController;
+import com.sarcross.issutrack.view.RootLayoutController;
+
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -45,6 +45,13 @@ public class IssuTrack extends Application {
 			
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
+			
+			
+			RootLayoutController controller = loader.getController();
+			controller.setMainApp(this);
+			
+			XMLFileHandler.setMainApp(this);
+			
 			primaryStage.show();
 		}
 		catch(IOException e)
@@ -82,6 +89,7 @@ public class IssuTrack extends Application {
 			dialogStage.setTitle("Edit Issue");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.initOwner(primaryStage);
+			
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 			

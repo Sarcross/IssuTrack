@@ -1,9 +1,9 @@
 package com.sarcross.issutrack.view;
 
-import java.time.LocalDate;
-
 import com.sarcross.issutrack.IssuTrack;
 import com.sarcross.issutrack.model.Issue;
+
+import java.time.LocalDate;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -42,7 +42,7 @@ public class IssueOverviewController {
 	@FXML
 	private void initialize() {
 		issueNameColumn.setCellValueFactory(cellData -> cellData.getValue().getName());
-		creationDateColumn.setCellValueFactory(cellData -> cellData.getValue().getCreated());
+		creationDateColumn.setCellValueFactory(cellData -> cellData.getValue().createdProperty());
 		
 		showIssueDetails(null);
 		
@@ -57,8 +57,8 @@ public class IssueOverviewController {
 	private void showIssueDetails(Issue issue) {
 		if(issue != null) {
 			issueNameLabel.setText(issue.getName().get());
-			descriptionLabel.setText(issue.getName().get());
-			creationDateLabel.setText(issue.getCreated().get().toString());
+			descriptionLabel.setText(issue.getDescription().get());
+			creationDateLabel.setText(issue.getCreated().toString());
 			creatorLabel.setText(issue.getCreator().get().toString());
 			if(issue.getAssignedTo().get() != null) {
 				assignedToLabel.setText(issue.getAssignedTo().get().toString());
@@ -67,11 +67,9 @@ public class IssueOverviewController {
 				assignedToLabel.setText("");
 			}
 			if(issue.isFinished())
-				finishDateLabel.setText(issue.getFinished().get().toString());
+				finishDateLabel.setText(issue.getFinished().toString());
 			else
 				finishDateLabel.setText("");
-			
-			
 		}
 		else {
 			issueNameLabel.setText("");
