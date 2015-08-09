@@ -16,4 +16,18 @@ Click "New..." to create a new issue. From there enter the:
 
 Assigning an issue to a person is not required. After an issue is created it is added to the list where it can be edited or deleted.
 
-*Currently IssuTrack is not feature rich nor complete. The ability to import and export issue sets is not currently implemented but is planned.*
+Issue sets are saved in .XML format with an element heirarchy as follows:
+```xml
+<issues>
+    <issue>
+      <assignedTo>Assignee Name\</assignedTo>
+      <created>2015-08-09\</created>
+      <creator>Creator Name\</creator>
+      <description>Description of the issue\</description>
+      <finished>-999999999-01-01\</finished>
+      <name>Issue Name\</name>
+  </issue>
+</issues>
+```
+
+This allows the possibility of easily creating an issue set without the need of IssuTrack. Issues with a finished value of -999999999-01-01, `LocalDate.MIN`, have not been finished.
