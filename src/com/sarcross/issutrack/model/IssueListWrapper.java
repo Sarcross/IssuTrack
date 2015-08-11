@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.sarcross.issutrack.util.IssueAdapter;
+import com.sarcross.issutrack.util.MissingFieldException;
 
 @XmlRootElement(name = "issues")
 public class IssueListWrapper {
@@ -22,6 +23,13 @@ public class IssueListWrapper {
 	}
 	
 	public void addIssue(Issue iss) {
-		issues.add(new IssueAdapter(iss));
+		try
+		{
+			issues.add(new IssueAdapter(iss));
+		}
+		catch(MissingFieldException mfe)
+		{
+			System.err.println("A field was missing. Could not add the Issue" + iss);
+		}
 	}
 }

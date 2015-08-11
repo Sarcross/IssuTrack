@@ -1,6 +1,7 @@
 package com.sarcross.issutrack.model;
 
 import com.sarcross.issutrack.util.IssueAdapter;
+import com.sarcross.issutrack.util.MissingFieldException;
 
 import java.time.LocalDate;
 
@@ -34,8 +35,9 @@ public class Issue {
 			finished = new SimpleObjectProperty<LocalDate>(LocalDate.ofEpochDay(iss.getFinished().toEpochDay()));
 	}
 	
-	public Issue(IssueAdapter iss) {
+	public Issue(IssueAdapter iss) throws MissingFieldException {
 		this();
+		verify(iss);
 		name = new SimpleStringProperty(iss.getName());
 		description = new SimpleStringProperty(iss.getDescription());
 		creator = new SimpleStringProperty(iss.getCreator());
@@ -51,6 +53,15 @@ public class Issue {
 		assignedTo = new SimpleStringProperty();
 		created = new SimpleObjectProperty<LocalDate>(LocalDate.now());
 		finished = new SimpleObjectProperty<LocalDate>(LocalDate.MIN);
+	}
+	
+	private void verify(IssueAdapter iss) throws MissingFieldException {
+		if(iss.getName().equals(""))
+			throw new MissingFieldException();
+		if(iss.getDescription().equals(""))
+			throw new MissingFieldException();
+		if(iss.getCreator().equals(""))
+			throw new MissingFieldException();
 	}
 	
 	public boolean equals(Issue iss) {

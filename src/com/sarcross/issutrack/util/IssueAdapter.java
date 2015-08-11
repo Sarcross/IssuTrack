@@ -23,7 +23,7 @@ public class IssueAdapter {
 		finished = LocalDate.MIN;
 	}
 	
-	public IssueAdapter(Issue iss) {
+	public IssueAdapter(Issue iss) throws MissingFieldException {
 		name  = iss.getName().get();
 		description = iss.getDescription().get();
 		creator = iss.getCreator().get();

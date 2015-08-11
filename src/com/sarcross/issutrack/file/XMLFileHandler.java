@@ -3,6 +3,7 @@ package com.sarcross.issutrack.file;
 import com.sarcross.issutrack.IssuTrack;
 import com.sarcross.issutrack.model.Issue;
 import com.sarcross.issutrack.model.IssueListWrapper;
+import com.sarcross.issutrack.util.MissingFieldException;
 
 import java.io.File;
 
@@ -31,7 +32,22 @@ public abstract class XMLFileHandler{
 			issueData.clear();
 			
 			for(int ndx = 0; ndx < wrapper.getIssues().size(); ndx ++) {
-				issueData.add(new Issue(wrapper.getIssues().get(ndx)));
+				try
+				{
+					issueData.add(new Issue(wrapper.getIssues().get(ndx)));
+				}
+				catch(MissingFieldException mfe)
+				{
+					Alert alert = new Alert(AlertType.ERROR);
+					
+					alert.setTitle("Error");
+					alert.setHeaderText("Missing Field Exception");
+					alert.setContentText("Issue (" + (ndx + 1) +") could not be loaded. Check the file for a missing field (Name, Creator, Description).\n" + file.getPath());
+					
+					alert.showAndWait();
+					mfe.printStackTrace();
+				}
+				
 			}
 		}
 		catch(Exception e)
